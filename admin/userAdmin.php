@@ -115,6 +115,7 @@ global $conn;
                                             <a class="btn btn-sm btn-warning p-2" href="userAdmin/suaAdmin.php?id=<?php echo $row["userName"] ?>">Sửa</a>
                                             <a class="btn btn-sm btn-danger p-2" onclick="return confirm('Bạn đã chắc chắn muốn xóa không');" href="userAdmin/xoaAdmin.php?id=<?php echo $row["userName"] ?>">Xóa</a>
                                         </td>
+
                                     </tr>
                                 <?php
                                 }

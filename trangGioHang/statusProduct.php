@@ -237,6 +237,7 @@ if (isset($_SESSION['loGin']["fullName"])) {
                                                 <th scope="col">Ngày mua</th>
                                                 <th scope="col">Giá tiền</th>
                                                 <th scope="col">Hóa đơn</th>
+                                                <th scope="col">PTTT</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -266,6 +267,20 @@ if (isset($_SESSION['loGin']["fullName"])) {
                                                     <td>
                                                         <a class="btn btn-sm btn-secondary p-2 m-1" href="inforProduct.php?id=<?php echo $row["idList"] ?>">Chi tiết</a>
                                                         <a onclick="return confirm('Bạn có muốn xóa thông tin đơn hàng này không ?');" class="btn btn-sm btn-warning p-2 m-1" href="../admin/tinhtrang/deleteOderList.php?id=<?php echo $row["idList"] ?>">Xóa</a>
+                                                    </td>
+
+
+                                                    <td>
+                                                        <?php
+                                                        // Hardcode phương thức thanh toán tại đây
+                                                        $option = "tienmat"; // hoặc "tructuyen", tùy thuộc vào yêu cầu của bạn
+
+                                                        if ($option == "tructuyen") {
+                                                            echo "Trực tuyến";
+                                                        } else if ($option == "tienmat") {
+                                                            echo "Tiền mặt";
+                                                        }
+                                                        ?>
                                                     </td>
                                                 </tr>
                                             <?php

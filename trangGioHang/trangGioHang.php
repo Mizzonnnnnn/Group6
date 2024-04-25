@@ -298,6 +298,17 @@ if (isset($_SESSION['loGin']["fullName"])) {
                         <div class="cart__title cardProduct__price " style="display: none;">
                             <input type="text" name="giaTien" id="" value="<?php echo ($TongTien); ?>">
                         </div>
+
+                        <div class="input-group mt-3">
+                            <span class="input-group-text">Phương thức thanh toán</span>
+                            <label for="option1">
+                                <input type="radio" id="option1" name="option" value="tructuyen"> Trực tuyến
+                            </label>
+                            <label for="option2">
+                                <input type="radio" id="option2" name="option" value="tienmat"> Tiền mặt
+                            </label>
+                        </div>
+
                     </div>
                     <center class="mt-3 mb-3">
                         <button type="su" class="btn btn-primary" name="muaHang">Đặt Hàng</button>

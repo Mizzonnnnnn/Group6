@@ -723,7 +723,6 @@ if (isset($_SESSION['loGin']["fullName"])) {
             </div>
         </div>
         <div class="hr"></div>
-        <center>Đặng Thanh Hải - 0387249884 - danghoanghai2k2@gmail.com</center>
         <?php
         $conn = null;
         ?>
