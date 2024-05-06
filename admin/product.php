@@ -58,24 +58,40 @@ global $conn;
                      </thead>
                      <tbody>
                         <?php
-                        $select = "SELECT * FROM `products` ORDER BY `brand` ASC";
+                        // Truy vấn để lấy danh sách các thương hiệu đã được bán ra
+                        $select_query = "SELECT DISTINCT SKU_UPC_MPN FROM infor_orders";
+                        $result = mysqli_query($conn, $select_query);
+
+                        // Tạo một mảng chứa các thương hiệu đã được bán ra
+                        $sold_brands = array();
+                        if (mysqli_num_rows($result) > 0) {
+                           while ($row = mysqli_fetch_assoc($result)) {
+                              $sold_product_names[] = $row['SKU_UPC_MPN'];
+                           }
+                        }
+                        $select = "SELECT * FROM products ";
                         $queyrySelect = mysqli_query($conn, $select);
-                        while ($row = mysqli_fetch_array($queyrySelect)) {
+                        if (mysqli_num_rows($queyrySelect) > 0) {
+                           while ($row = mysqli_fetch_array($queyrySelect)) {
+                              if (!in_array($row['SKU_UPC_MPN'], $sold_product_names)) {
+
                         ?>
-                           <tr class="text-dark text-capitalize ">
-                              <td><?php echo $row["product_id"] ?></td>
-                              <td><?php echo $row["SKU_UPC_MPN"] ?></td>
-                              <td><?php echo number_format($row["price"], 3, '.', '.') ?>₫</td>
-                              <td><?php echo $row["discount"] ?>%</td>
-                              <td><?php echo $row["description"] ?></td>
-                              <td><img style="width: 100px;" class="object-fit-cover border rounded" src="../<?php echo $row["image_url"] ?>" alt="ảnh này không tồn tại"></td>
-                              <td><?php echo $row["brand"] ?></td>
-                              <td><?php echo $row["gender"] ?></td>
-                              <td><?php echo $row["sizeHeadder"] ?></td>
-                              <td><a class="btn btn-sm btn-warning p-2" href="product/updateproduct.php?id=<?php echo $row["product_id"] ?>">Sửa</a></td>
-                              <td><a class="btn btn-sm btn-danger p-2" onclick="return confirm('Bạn có muốn xóa sản phẩm này không ?');" href="product/deleteproduct.php?id=<?php echo $row["product_id"] ?>">Xóa</a></td>
-                           </tr>
+                                 <tr class="text-dark text-capitalize ">
+                                    <td><?php echo $row["product_id"] ?></td>
+                                    <td><?php echo $row["SKU_UPC_MPN"] ?></td>
+                                    <td><?php echo number_format($row["price"], 3, '.', '.') ?>₫</td>
+                                    <td><?php echo $row["discount"] ?>%</td>
+                                    <td><?php echo $row["description"] ?></td>
+                                    <td><img style="width: 100px;" class="object-fit-cover border rounded" src="../<?php echo $row["image_url"] ?>" alt="ảnh này không tồn tại"></td>
+                                    <td><?php echo $row["brand"] ?></td>
+                                    <td><?php echo $row["gender"] ?></td>
+                                    <td><?php echo $row["sizeHeadder"] ?></td>
+                                    <td><a class="btn btn-sm btn-warning p-2" href="product/updateproduct.php?id=<?php echo $row["product_id"] ?>">Sửa</a></td>
+                                    <td><a class="btn btn-sm btn-danger p-2" onclick="return confirm('Bạn có muốn xóa sản phẩm này không ?');" href="product/deleteproduct.php?id=<?php echo $row["product_id"] ?>">Xóa</a></td>
+                                 </tr>
                         <?php
+                              }
+                           }
                         }
                         ?>
                      </tbody>

@@ -91,12 +91,13 @@ global $conn;
                         <table class="table text-start align-middle table-bordered table-striped mb-0" id="myTable">
                             <thead>
                                 <tr class="text-dark text-center">
-                                    <th scope="col">.</th>
+                                    <th scope="col">#</th>
                                     <th scope="col">Tài khoản đăng nhập</th>
                                     <th scope="col">Mật khẩu đăng nhập</th>
                                     <th scope="col">Tên người dùng</th>
                                     <th scope="col">Quyền truy cập</th>
                                     <th scope="col">Chức năng</th>
+                                    <th scope="col">Trạng Thái</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -106,7 +107,7 @@ global $conn;
                                 while ($row = mysqli_fetch_array($queyrySelect)) {
                                 ?>
                                     <tr class="text-dark text-center">
-                                        <td>*</td>
+                                        <td><?php echo $row["d_id"] ?></td>
                                         <td><?php echo $row["userName"] ?></td>
                                         <td><?php echo $row["passWord"] ?></td>
                                         <td class="text-capitalize"><?php echo $row["Name"] ?></td>
@@ -115,7 +116,17 @@ global $conn;
                                             <a class="btn btn-sm btn-warning p-2" href="userAdmin/suaAdmin.php?id=<?php echo $row["userName"] ?>">Sửa</a>
                                             <a class="btn btn-sm btn-danger p-2" onclick="return confirm('Bạn đã chắc chắn muốn xóa không');" href="userAdmin/xoaAdmin.php?id=<?php echo $row["userName"] ?>">Xóa</a>
                                         </td>
-
+                                        <td>
+                                            <?php 
+                                                if($row["status"]==1)  
+                                                {
+                                                    echo '<p><a href="status.php?d_id='.$row["d_id"].'&status=0" style="border-radius: 4px; font-size: 75%; padding: 4px 7px; margin-right: 5px; font-weight: 400; color: #fff !important; background-color: #28a745;">enable</a></p>';
+                                                }
+                                                else {
+                                                    echo '<p><a href="status.php?d_id='.$row["d_id"].'&status=1" style="border-radius: 4px; font-size: 75%; padding: 4px 7px; margin-right: 5px; font-weight: 400; color: #fff !important; background-color: #007bff;" >disable</a></p>';
+                                                }
+                                            ?>
+                                        </td>
                                     </tr>
                                 <?php
                                 }
