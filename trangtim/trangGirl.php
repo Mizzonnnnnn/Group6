@@ -1,7 +1,22 @@
 <?php
 include "../connect.php";
 global $conn;
-$select = "SELECT * FROM `products` WHERE `gender` LIKE '%nữ%'";
+if(isset($_GET['trang'])){
+    $page=$_GET['trang'];
+
+}else{
+    $page=1;
+}
+if( $page==' '|| $page==1){
+    $begin=0;
+
+}else{
+    $begin=($page*5)-5;
+    }
+    
+
+
+$select = "SELECT * FROM `products` WHERE `gender` LIKE '%nữ%'LIMIT $begin,5";
 $queyrySelect = mysqli_query($conn, $select);
 $num_rows = mysqli_num_rows($queyrySelect);
 ?>
@@ -246,6 +261,43 @@ if (isset($_SESSION['loGin']["fullName"])) {
                 <?php
                 }
                 ?> <!-- xong card product  -->
+                <?php
+                $sql_trang = "SELECT * FROM `products` WHERE `gender` LIKE '%nữ%'";
+                $queyrysql_trang = mysqli_query($conn, $sql_trang);
+                $row_counts = mysqli_num_rows($queyrysql_trang);
+                
+                $trang=ceil($row_counts/5);
+                
+                ?>
+                
+            <style type="text/css">
+                ul.list_trang{
+                    padding: 0;
+                    margin:0;
+                    list-style: none;
+                }
+                ul.list_trang li{
+                    float:left;
+                    
+                    margin:5px;
+                    background:burlywood;
+                    display:block;
+                }
+                ul.list_trang li a{
+                    padding: 5px 12px;
+                    color:#000;
+                    text-align:center;
+                    text-decoration:none;
+                    
+                }
+            </style>
+            <ul class="list_trang">
+                <?php
+                    for($i=1;$i<=$trang;$i++){
+                ?>
+                 <li <?php if($i==$page){echo 'style="background:red"';}else {echo '';} ?>><a  href="trangGirl.php?trang=<?php echo $i ?>" ><?php echo $i ?></a></li>
+                <?php }?>
+            </ul>
             </div>
         </div>
         <!-- xong body  -->

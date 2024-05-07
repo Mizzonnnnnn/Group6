@@ -37,6 +37,32 @@ global $conn;
                 <div class="bg-light rounded-top p-4">
                     <div class="d-flex align-items-center justify-content-between mb-4">
                         <h6 class="mb-0">Thông tin các hóa đơn</h6>
+                        <div class="col-md-7">
+                            <form action="" method="GET">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <input type="date" name="date" value="<?= isset($_GET['date']) == true ? $_GET['date'] : ''  ?>" class="form-control">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <select name="status" class="form-select">
+                                            <option value="0" <?= isset($_GET['status']) == true ? ($_GET['status'] == 0 ? 'selected' : '') : ''  ?>>Chưa Xác Nhận
+                                            </option>
+                                            <option value="1" <?= isset($_GET['status']) == true ? ($_GET['status'] == 1 ? 'selected' : '') : ''  ?>>Đã Xác Nhận
+                                            </option>
+                                            <option value="2" <?= isset($_GET['status']) == true ? ($_GET['status'] == 2 ? 'selected' : '') : ''  ?>>Đang giao
+                                            </option>
+                                            <option value="3" <?= isset($_GET['status']) == true ? ($_GET['status'] == 3 ? 'selected' : '') : ''  ?>>Đã giao
+                                            </option>
+                                        </select>
+
+                                    </div>
+                                    <div class="col-md-4">
+                                        <button type="Submit" class="btn btn-sm btn-success p-2 m-1">Filter</button>
+                                        <a href="listOrder.php">Resert</a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                     <div class="table-responsive ">
                         <a class="btn btn-sm btn-success p-2 m-1" href="../export/exportListOder.php">Export</a>
@@ -58,8 +84,16 @@ global $conn;
                             </thead>
                             <tbody>
                                 <?php
-                                $select = "SELECT * FROM `list_orders` ORDER BY `idList` ASC";
+                                if (isset($_GET['date']) && $_GET['date'] != '' && isset($_GET['status']) && $_GET['status'] != '') {
+                                    $date = ($_GET['date']);
+                                    $status = ($_GET['status']);
+                                    $select = "SELECT * FROM `list_orders` WHERE `dateOder`='$date'AND `status`='$status' ORDER BY `idList` ASC";
+                                } else {
+                                    $select = "SELECT * FROM `list_orders` ORDER BY `idList` ASC";
+                                }
+
                                 $queyrySelect = mysqli_query($conn, $select);
+
                                 while ($row = mysqli_fetch_array($queyrySelect)) {
                                 ?>
                                     <tr class="text-dark">

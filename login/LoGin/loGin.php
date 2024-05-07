@@ -35,7 +35,7 @@ global $conn;
                <div class="login-child__inputPass">
                   <input type="password" name="passWord" id="inputPass" placeholder="Enter Password" required value="" />
                </div>
-                <?php
+               <?php
                if ($_POST) {
                   $username = $_POST['userName'];
                   $password = $_POST['passWord'];
@@ -44,7 +44,7 @@ global $conn;
                   $result = mysqli_query($conn, $query);
                   $row = mysqli_fetch_array($result);
 
-                  if ($result->num_rows > 0) {
+                  if ($result->num_rows > 0 && $row['status'] == 1) {
                      if ($row['role'] == 'admin') {
                         session_start();
                         $_SESSION['loGinAdmin']["fullName"] = $row["Name"];
@@ -61,11 +61,12 @@ global $conn;
                         exit;
                      }
                   } else {
-                     echo '<div class="login__child--infomation">*Bạn Nhập sai mật khẩu hoặc tài khoản*</div>';
+                     if ($row['status'] == 0) echo '<div class="login__child--infomation">*Tài khoản đã bị khóa *</div>';
+                     else echo '<div class="login__child--infomation">*Bạn Nhập thông tin hoặc tài khoản *</div>';
                   }
                }
                $conn->close();
-               
+
                ?>
                <div class="login-child__option">
                   <div class="login__child--optionOne">
