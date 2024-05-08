@@ -150,11 +150,46 @@ if (isset($_SESSION['loGin']["fullName"])) {
                     </div>
                     <!-- xong menu  -->
                     <div class="heading--layout__search">
+
                         <form class="input-group" action="trangtim/trangtim.php" method="POST">
-                            <input type="text" name="text_search" class="form-control txtTimKiem" placeholder="tìm theo hãng, tên ,....">
-                            <button class="btn btn-secondary btnTimKiem" type="submit" id="button-addon1" name="buttom_search">
-                                <i class="bi bi-search"></i>
-                            </button>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <!-- Name Input -->
+                                    <label for="name" class="form-label">Tên:</label>
+                                    <input type="text" name="text_search" class="form-control txtTimKiem" placeholder="tìm theo hãng, tên ,....">
+                                </div>
+                                <div class="col-md-4">
+                                    <!-- Gender Selection -->
+                                    <label for="gender" class="form-label">Giới tính:</label>
+                                    <select name="gender" id="gender" class="form-select">
+                                        <option value="">Không chọn</option>
+                                        <option value="Nam" <?= (isset($_GET['gender']) && $_GET['gender'] === 'Nam') ? 'selected' : '' ?>>Nam</option>
+                                        <option value="Nữ" <?= (isset($_GET['gender']) && $_GET['gender'] === 'Nữ') ? 'selected' : '' ?>>Nữ</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <!-- Price Range Selection -->
+                                    <label for="price" class="form-label">Khoảng giá:</label>
+                                    <select name="price" id="price" class="form-select">
+                                        <option value="">Không chọn</option>
+                                        <option value="0-1000" <?= (isset($_GET['price']) && $_GET['price'] === '0-1000') ? 'selected' : '' ?>>Dưới 1 triệu</option>
+                                        <option value="1000-5000" <?= (isset($_GET['price']) && $_GET['price'] === '1000-5000') ? 'selected' : '' ?>>1 triệu - 5 triệu</option>
+                                        <option value="5000-10000" <?= (isset($_GET['price']) && $_GET['price'] === '5000-10000') ? 'selected' : '' ?>>5 triệu - 10 triệu</option>
+                                        <option value="10000-20000" <?= (isset($_GET['price']) && $_GET['price'] === '10000-20000') ? 'selected' : '' ?>>10 triệu - 20 triệu</option>
+                                        <option value="20000-50000" <?= (isset($_GET['price']) && $_GET['price'] === '20000-50000') ? 'selected' : '' ?>>20 triệu - 50 triệu</option>
+                                        <option value="50000" <?= (isset($_GET['price']) && $_GET['price'] === '50000') ? 'selected' : '' ?>>Trên 50 triệu</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-md-12">
+                                    <!-- Submit Button -->
+                                    <button class="btn btn-secondary btnTimKiem" type="submit" id="button-addon1" name="buttom_search">
+                                        <i class="bi bi-search"></i>
+                                    </button>
+
+                                </div>
+                            </div>
                         </form>
                     </div>
                     <!-- xong tìm kiếm  -->
@@ -460,7 +495,7 @@ if (isset($_SESSION['loGin']["fullName"])) {
                     <div class="swiper-pagination"></div>
                     <div class="swiper-wrapper">
                         <?php
-                        $select = "SELECT * FROM `products` WHERE `price` <= 100000 AND `price` >= 10000;";
+                        $select = "SELECT * FROM `products` ";
                         $queyrySelect = mysqli_query($conn, $select);
                         while ($row = mysqli_fetch_array($queyrySelect)) {
                         ?>
@@ -503,117 +538,12 @@ if (isset($_SESSION['loGin']["fullName"])) {
                         ?> <!-- xong card product  -->
                     </div>
                 </div>
+
             </div>
             <!-- xong phần bán chạy nhất hệ thống  -->
-            <div class="layout__option layout__Luxury">
-                <div class="layout__option__title">
-                    <h4>BỘ SƯU TẬP HÀNG LUXURY</h4>
-                </div>
-                <div class="swiper swiperss ">
-                    <div class="swiper-button-next"></div>
-                    <div class="swiper-button-prev"></div>
-                    <div class="swiper-pagination"></div>
-                    <div class="swiper-wrapper">
-                        <?php
-                        $select = "SELECT * FROM `products` WHERE `price` >= 60000";
-                        $queyrySelect = mysqli_query($conn, $select);
-                        while ($row = mysqli_fetch_array($queyrySelect)) {
-                        ?>
-                            <div class="theproduct swiper-slide" style="text-align: left;">
-                                <a href="trangchitiet/trangchitiet.php?id=<?php echo $row['product_id']; ?>">
-                                    <div class="card overflow-hidden theproduct__card" style="transition: color 0.1s linear;">
-                                        <img src="<?php echo $row["image_url"] ?>" class="card-img-top" alt="ảnh này không tồn tại trong web đồng hồ...">
-                                        <div class="card-body">
-                                            <div class="theproduct__title">
-                                                <h5><?php echo $row["brand"] . " " . $row["sizeHeadder"] . "mm " . $row["gender"] . " " . $row["SKU_UPC_MPN"] ?></h5>
-                                            </div>
-                                            <div class="theproduct__price card-text"><?php echo number_format(($row["price"] - ($row["price"] * ($row["discount"] / 100))), 3, '.', '.') ?>₫</div>
-                                            <div class="theproduct__sale card-text">
-                                                <span><?php echo number_format($row["price"], 3, '.', '.') ?>₫</span>
-                                                <div class="theProduct__persentSale">-<span class="theProduct__persent"><?php echo $row["discount"] ?></span>%</div>
-                                            </div>
-                                            <div class="theproduct__star">
-                                                <i class="bi bi-star-fill"></i>
-                                                <i class="bi bi-star-fill"></i>
-                                                <i class="bi bi-star-fill"></i>
-                                                <i class="bi bi-star-fill"></i>
-                                                <i class="bi bi-star-fill"></i>
-                                                <?php
-                                                if ($row["length"] <= 0) { ?>
-                                                    <span class="theProduct__lenght text-danger">Hết hàng</span>
-                                                <?php
-                                                } else {
-                                                ?>
-                                                    <span class="theProduct__lenght"><?php echo $row["length"] ?></span>
-                                                <?php
-                                                }
-                                                ?>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                        <?php
-                        }
-                        ?> <!-- xong card product  -->
-                    </div>
-                </div>
-            </div>
+
             <!-- xong phần bán chạy nhất hệ thống  -->
-            <div class="layout__option layout__giamGia50">
-                <div class="layout__option__title">
-                    <h4>SẢN PHẨM ĐỒNG HỒ GIÁ RẺ</h4>
-                </div>
-                <div class="swiper swiperss ">
-                    <div class="swiper-button-next"></div>
-                    <div class="swiper-button-prev"></div>
-                    <div class="swiper-pagination"></div>
-                    <div class="swiper-wrapper">
-                        <?php
-                        $select = "SELECT * FROM `products` WHERE `price` <= 10000";
-                        $queyrySelect = mysqli_query($conn, $select);
-                        while ($row = mysqli_fetch_array($queyrySelect)) {
-                        ?>
-                            <div class="theproduct swiper-slide" style="text-align: left;">
-                                <a href="trangchitiet/trangchitiet.php?id=<?php echo $row['product_id']; ?>">
-                                    <div class="card overflow-hidden theproduct__card" style="transition: color 0.1s linear;">
-                                        <img src="<?php echo $row["image_url"] ?>" class="card-img-top" alt="ảnh này không tồn tại trong web đồng hồ...">
-                                        <div class="card-body">
-                                            <div class="theproduct__title">
-                                                <h5><?php echo $row["brand"] . " " . $row["sizeHeadder"] . "mm " . $row["gender"] . " " . $row["SKU_UPC_MPN"] ?></h5>
-                                            </div>
-                                            <div class="theproduct__price card-text"><?php echo number_format(($row["price"] - ($row["price"] * ($row["discount"] / 100))), 3, '.', '.') ?>₫</div>
-                                            <div class="theproduct__sale card-text">
-                                                <span><?php echo number_format($row["price"], 3, '.', '.') ?>₫</span>
-                                                <div class="theProduct__persentSale">-<span class="theProduct__persent"><?php echo $row["discount"] ?></span>%</div>
-                                            </div>
-                                            <div class="theproduct__star">
-                                                <i class="bi bi-star-fill"></i>
-                                                <i class="bi bi-star-fill"></i>
-                                                <i class="bi bi-star-fill"></i>
-                                                <i class="bi bi-star-fill"></i>
-                                                <i class="bi bi-star-fill"></i>
-                                                <?php
-                                                if ($row["length"] <= 0) { ?>
-                                                    <span class="theProduct__lenght text-danger">Hết hàng</span>
-                                                <?php
-                                                } else {
-                                                ?>
-                                                    <span class="theProduct__lenght"><?php echo $row["length"] ?></span>
-                                                <?php
-                                                }
-                                                ?>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                        <?php
-                        }
-                        ?> <!-- xong card product  -->
-                    </div>
-                </div>
-            </div>
+
             <!-- xong phần giảm giá 50%  -->
 
         </div>
@@ -723,6 +653,7 @@ if (isset($_SESSION['loGin']["fullName"])) {
             </div>
         </div>
         <div class="hr"></div>
+        <center>Đặng Thanh Hải - 0387249884 - danghoanghai2k2@gmail.com</center>
         <?php
         $conn = null;
         ?>

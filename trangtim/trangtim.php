@@ -6,8 +6,37 @@ if (isset($_POST["buttom_search"])) {
     if ($search == "") {
         header("location:../index.php");
     } else {
-        $sql_search = "SELECT * FROM `products` WHERE `brand` LIKE '%$search%'";
+
+        $search = isset($_POST['text_search']) ? $_POST['text_search'] : '';
+        $gender = isset($_POST['gender']) ? $_POST['gender'] : '';
+        $price = isset($_POST['price']) ? $_POST['price'] : '';
+
+        // Base SQL query to select products
+        $sql_search = "SELECT * FROM `products` WHERE 1";
+
+        // Append conditions based on provided search parameters
+        if (!empty($search)) {
+            $sql_search .= " AND `brand` LIKE '%$search%'";
+        }
+
+        if (!empty($gender)) {
+            $sql_search .= " AND `gender` = '$gender'";
+        }
+
+        if (!empty($price)) {
+            // Extract min and max price from price range
+            $priceRange = explode('-', $price);
+            $minPrice = $priceRange[0];
+            $maxPrice = isset($priceRange[1]) ? $priceRange[1] : PHP_INT_MAX;
+
+            // Add price range condition
+            $sql_search .= " AND `price` >= $minPrice AND `price` <= $maxPrice";
+        }
+
+        // Perform the SQL query
         $queyrySelect = mysqli_query($conn, $sql_search);
+
+        // Check if query was successful
         $num_rows = mysqli_num_rows($queyrySelect);
     }
 }
@@ -161,11 +190,45 @@ if (isset($_SESSION['loGin']["fullName"])) {
                     </div>
                     <!-- xong menu  -->
                     <div class="heading--layout__search">
-                        <form class="input-group" action="trangtim.php" method="POST">
-                            <input type="text" name="text_search" class="form-control txtTimKiem" placeholder="tìm theo hãng, tên ,....">
-                            <button class="btn btn-secondary btnTimKiem" type="submit" id="button-addon1" name="buttom_search">
-                                <i class="bi bi-search"></i>
-                            </button>
+                        <form class="input-group" action="trangtim/trangtim.php" method="POST">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <!-- Name Input -->
+                                    <label for="name" class="form-label">Tên:</label>
+                                    <input type="text" name="text_search" class="form-control txtTimKiem" placeholder="tìm theo hãng, tên ,....">
+                                </div>
+                                <div class="col-md-4">
+                                    <!-- Gender Selection -->
+                                    <label for="gender" class="form-label">Giới tính:</label>
+                                    <select name="gender" id="gender" class="form-select">
+                                        <option value="">Không chọn</option>
+                                        <option value="Nam" <?= (isset($_GET['gender']) && $_GET['gender'] === 'Nam') ? 'selected' : '' ?>>Nam</option>
+                                        <option value="Nữ" <?= (isset($_GET['gender']) && $_GET['gender'] === 'Nữ') ? 'selected' : '' ?>>Nữ</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <!-- Price Range Selection -->
+                                    <label for="price" class="form-label">Khoảng giá:</label>
+                                    <select name="price" id="price" class="form-select">
+                                        <option value="">Không chọn</option>
+                                        <option value="0-1000" <?= (isset($_GET['price']) && $_GET['price'] === '0-1000') ? 'selected' : '' ?>>Dưới 1 triệu</option>
+                                        <option value="1000-5000" <?= (isset($_GET['price']) && $_GET['price'] === '1000-5000') ? 'selected' : '' ?>>1 triệu - 5 triệu</option>
+                                        <option value="5000-10000" <?= (isset($_GET['price']) && $_GET['price'] === '5000-10000') ? 'selected' : '' ?>>5 triệu - 10 triệu</option>
+                                        <option value="10000-20000" <?= (isset($_GET['price']) && $_GET['price'] === '10000-20000') ? 'selected' : '' ?>>10 triệu - 20 triệu</option>
+                                        <option value="20000-50000" <?= (isset($_GET['price']) && $_GET['price'] === '20000-50000') ? 'selected' : '' ?>>20 triệu - 50 triệu</option>
+                                        <option value="50000" <?= (isset($_GET['price']) && $_GET['price'] === '50000') ? 'selected' : '' ?>>Trên 50 triệu</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-md-12">
+                                    <!-- Submit Button -->
+                                    <button class="btn btn-secondary btnTimKiem" type="submit" id="button-addon1" name="buttom_search">
+                                        <i class="bi bi-search"></i>
+                                    </button>
+
+                                </div>
+                            </div>
                         </form>
                     </div>
                     <!-- xong tìm kiếm  -->
