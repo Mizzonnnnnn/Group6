@@ -30,6 +30,13 @@ global $conn;
                     <div class="login-child__inputUser">
                         <input type="text" name="userName" id="inputUser" placeholder="Enter User" required />
                     </div>
+                    <div class="login-child__User">
+                        <label for="inputNameUser"> Name</label>
+                    </div>
+                    <div class="login-child__inputUser">
+                        <input type="text" name="Name" id="inputUser" placeholder="Enter Name" required />
+                    </div>
+
                     <div class="login-child__Pass">
                         <label for="inputPass">Pass Word</label>
                     </div>
@@ -45,6 +52,7 @@ global $conn;
                     <?php
                     if ($_POST) {
                         $username = $_POST['userName'];
+                        $name = $_POST['Name'];
                         $password = $_POST['passWord'];
                         $enterPass = $_POST['EntetpassWord'];
                         if ($password ==  $enterPass) {
@@ -53,7 +61,7 @@ global $conn;
                             if ($result->num_rows > 0) {
                                 echo '<div class="login__child--infomation">*Tài khoản đã tồn tại mời kiểm tra lại*</div>';
                             } else {
-                                $insset = "INSERT INTO `user_admin` (`userName`, `passWord`) VALUES (' $username', '$password');";
+                                $insset = "INSERT INTO `user_admin` (`userName`, `passWord`,`Name`) VALUES (' $username', '$password',' $name');";
                                 if ($conn->query($insset) === TRUE) {
                                     header('location:../ForGetPass/updateSussec.html');
                                 } else {

@@ -11,13 +11,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $dateOder = $_POST["dateOder"];
     $note = $_POST["note"];
     $giaTien = $_POST["giaTien"];
+    $payment = $_POST["payment"];
     echo $giaTien . $dateOder;
+
+
+
     if (isset($_SESSION['loGin']["fullName"])) {
         $fullName  = $_SESSION['loGin']["fullName"];
         $userName =   $_SESSION['loGin']["userName"];
     }
     $randomNumber = rand();
-    $insert = "INSERT INTO `list_orders`(`idList`,`namePeople`, `address`, `email`, `note`, `phoneNumbers`, `status`, `dateOder`,`price`, `userName`) VALUES ('$randomNumber','$hoTen','$address','$email','$note','$soDienThoai',0,'$dateOder','$giaTien','$userName')";
+    $insert = "INSERT INTO `list_orders`(`idList`,`namePeople`, `address`, `email`, `note`, `phoneNumbers`, `status`, `dateOder`,`payment`,`price`, `userName`) VALUES ('$randomNumber','$hoTen','$address','$email','$note','$soDienThoai',0,'$dateOder','$payment','$giaTien','$userName')";
     $query = mysqli_query($conn, $insert);
     $select = "SELECT * FROM `cart_product` where `userName` like '$userName'";
     $querys = mysqli_query($conn, $select);
