@@ -259,7 +259,7 @@ if (isset($_SESSION['loGin']["fullName"])) {
                     <h4>Liên hệ</h4>
                     <p>Địa chỉ: <a href="">Xóm 3 Đông Xuyên - Tiền Hải - Thái Bình</a></p>
                     <p>Điện thoại: <a href="">0387249884</a></p>
-                    <p>Email: <a href="">danghoanghai2k2@gmail.com</a></p>
+                    <p>Email: <a href="">abc@gmail.com</a></p>
                 </div>
                 <div class="Thefooter__chinhSach">
                     <h4>Chính sách</h4>

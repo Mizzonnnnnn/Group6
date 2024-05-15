@@ -79,6 +79,7 @@ global $conn;
                                     <th scope="col">Tình trạng</th>
                                     <th scope="col">Ngày mua</th>
                                     <th scope="col">Giá tiền</th>
+                                    <th scope="col">HInh thuc thanh toan</th>
                                     <th scope="col">Tài khoản mua</th>
                                 </tr>
                             </thead>
@@ -120,6 +121,7 @@ global $conn;
                                         </td>
                                         <td><?php echo $row["dateOder"] ?></td>
                                         <td><?php echo number_format($row["price"], 3, '.', '.'); ?>₫</td>
+                                        <td><?php echo $row["payment"] ?></td>
                                         <td><?php echo $row["userName"] ?></td>
 
                                     </tr>

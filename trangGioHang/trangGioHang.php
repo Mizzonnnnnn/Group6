@@ -288,9 +288,19 @@ if (isset($_SESSION['loGin']["fullName"])) {
                             <input type="text" class="form-control" name="email" placeholder="abc@gmail.com" required>
                         </div>
                         <div class="input-group mt-3">
-                            <span class="input-group-text">Thời gian đặt hàng</span>
-                            <input style="pointer-events: none ;" type="text" class="form-control" name="dateOder" id="dateOder" placeholder="chú ý khi giao hàng" required>
-                        </div>
+    <span class="input-group-text">Thời gian đặt hàng</span>
+    <input type="text" class="form-control" name="dateOders" id="dateOders" placeholder="chú ý khi giao hàng" required>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Lấy ngày tháng năm hiện tại
+        const currentDate = new Date().toISOString().slice(0, 10);
+
+        // Đặt giá trị của input thành ngày tháng năm hiện tại
+        document.getElementById('dateOders').value = currentDate;
+    });
+</script>
                         <div class="input-group mt-3">
                             <span class="input-group-text">Hình thức thanh toán</span>
                             <input type="radio" class="input-group-text" name="payment" checked id="cash" value="cash">

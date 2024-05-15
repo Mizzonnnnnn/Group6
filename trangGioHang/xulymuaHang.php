@@ -8,7 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $soDienThoai = $_POST["soDienThoai"];
     $address = $_POST["address"];
     $email = $_POST["email"];
-    $dateOder = $_POST["dateOder"];
+    $dateOder = $_POST["dateOders"];
     $note = $_POST["note"];
     $giaTien = $_POST["giaTien"];
     $payment = $_POST["payment"];

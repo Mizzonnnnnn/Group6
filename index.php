@@ -155,12 +155,12 @@ if (isset($_SESSION['loGin']["fullName"])) {
                             <div class="row">
                                 <div class="col-md-4">
                                     <!-- Name Input -->
-                                    <label for="name" class="form-label">Tên:</label>
+                                    <label for="name" class="form-label"></label>
                                     <input type="text" name="text_search" class="form-control txtTimKiem" placeholder="tìm theo hãng, tên ,....">
                                 </div>
                                 <div class="col-md-4">
                                     <!-- Gender Selection -->
-                                    <label for="gender" class="form-label">Giới tính:</label>
+                                    <label for="gender" class="form-label"></label>
                                     <select name="gender" id="gender" class="form-select">
                                         <option value="">Không chọn</option>
                                         <option value="Nam" <?= (isset($_GET['gender']) && $_GET['gender'] === 'Nam') ? 'selected' : '' ?>>Nam</option>
@@ -169,7 +169,7 @@ if (isset($_SESSION['loGin']["fullName"])) {
                                 </div>
                                 <div class="col-md-4">
                                     <!-- Price Range Selection -->
-                                    <label for="price" class="form-label">Khoảng giá:</label>
+                                    <label for="price" class="form-label"></label>
                                     <select name="price" id="price" class="form-select">
                                         <option value="">Không chọn</option>
                                         <option value="0-1000" <?= (isset($_GET['price']) && $_GET['price'] === '0-1000') ? 'selected' : '' ?>>Dưới 1 triệu</option>
@@ -627,7 +627,7 @@ if (isset($_SESSION['loGin']["fullName"])) {
                 <h4>Liên hệ</h4>
                 <p>Địa chỉ: <a href="">Xóm 3 Đông Xuyên - Tiền Hải - Thái Bình</a></p>
                 <p>Điện thoại: <a href="">0387249884</a></p>
-                <p>Email: <a href="">danghoanghai2k2@gmail.com</a></p>
+                <p>Email: <a href="">abc@gmail.com</a></p>
             </div>
             <div class="Thefooter__chinhSach">
                 <h4>Chính sách</h4>
